@@ -1,0 +1,18 @@
+##  Plugin Information  ##
+name: Sponge
+version: version-number-unknown
+main: syam.sponge.Sponge
+description: Sponge Plugin
+website: http://sakura-server.net/
+#softdepend: [Vault, PermissionsEx]
+##  Original Author     ##
+author: syam
+commands:
+    sponge:
+      usage: /sponge - to see the help
+      aliases: [sponges]
+      description: To see the sponge help.
+permissions:
+    sponge.admin:
+        default: op
+        description: Allow access admin commands
