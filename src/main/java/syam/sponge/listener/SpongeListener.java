@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 import syam.sponge.Sponge;
 
@@ -21,14 +22,14 @@ import syam.sponge.Sponge;
  * BlockListener (BlockListener.java)
  * @author syam(syamn)
  */
-public class BlockListener implements Listener {
+public class SpongeListener implements Listener {
 	public final static Logger log = Sponge.log;
 	private static final String logPrefix = Sponge.logPrefix;
 	private static final String msgPrefix = Sponge.msgPrefix;
 
 	private final Sponge plugin;
 
-	public BlockListener(final Sponge plugin){
+	public SpongeListener(final Sponge plugin){
 		this.plugin = plugin;
 	}
 
@@ -80,6 +81,30 @@ public class BlockListener implements Listener {
 		int x = toBlock.getX();
 		int y = toBlock.getY();
 		int z = toBlock.getZ();
+
+		for (int cx = -radius; cx <= radius; cx++){ // X軸走査
+			for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
+				for (int cz = -radius; cz <= radius; cz++){ // Z軸走査
+					// ブロックIDチェック: 19(SPONGE)
+					if(world.getBlockTypeIdAt(x + cx, y + cy, z + cz) == 19){
+						event.setCancelled(true);
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	// 流体ブロックの流れが変わった
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event){
+		Block block = event.getBlockClicked().getRelative(event.getBlockFace());
+		World world = block.getWorld();
+		int radius = plugin.getConfigs().getRadius();
+
+		int x = block.getX();
+		int y = block.getY();
+		int z = block.getZ();
 
 		for (int cx = -radius; cx <= radius; cx++){ // X軸走査
 			for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
