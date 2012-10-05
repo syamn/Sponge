@@ -11,14 +11,13 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import syam.sponge.command.BaseCommand;
 import syam.sponge.command.HelpCommand;
+import syam.sponge.listener.BlockListener;
 import syam.sponge.util.Metrics;
 
 
@@ -33,7 +32,7 @@ public class Sponge extends JavaPlugin{
 		public final static String msgPrefix = "&6[Sponge] &f";
 
 		// ** Listener **
-		//BlockListener blockListener = new BlockListener(this);
+		BlockListener blockListener = new BlockListener(this);
 
 		// ** Commands **
 		private List<BaseCommand> commands = new ArrayList<BaseCommand>();
@@ -71,7 +70,7 @@ public class Sponge extends JavaPlugin{
 			//Perms.setupPermissionHandler();
 
 			// Regist Listeners
-			//pm.registerEvents(blockListener, this);
+			pm.registerEvents(blockListener, this);
 
 			// コマンド登録
 			registerCommands();
