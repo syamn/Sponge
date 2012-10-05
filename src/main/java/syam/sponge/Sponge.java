@@ -17,6 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import syam.sponge.command.BaseCommand;
 import syam.sponge.command.HelpCommand;
+import syam.sponge.command.ReloadCommand;
 import syam.sponge.listener.BlockListener;
 import syam.sponge.util.Metrics;
 
@@ -105,7 +106,7 @@ public class Sponge extends JavaPlugin{
 			// General Commands
 
 			// Admin Commands
-			//commands.add(new ReloadCommand());
+			commands.add(new ReloadCommand());
 		}
 
 		/**

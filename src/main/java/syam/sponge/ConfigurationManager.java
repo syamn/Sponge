@@ -39,7 +39,8 @@ public class ConfigurationManager {
 	//private final List<String> defaultPermissions = new ArrayList<String>() {{add("vault"); add("pex"); add("superperms"); add("ops");}};
 
 	// 設定項目
-	/* Basic Configs */
+	/* General Configs */
+	private int radius = 2;
 
 	/* Permissions Configs */
 	//private List<String> permissions = defaultPermissions;
@@ -75,9 +76,8 @@ public class ConfigurationManager {
 		double version = plugin.getConfig().getDouble("Version", 0.1D);
 		checkver(version);
 
-		/* Basic Configs */
-
-
+		/* General Configs */
+		plugin.getConfig().getInt("Radius", 2);
 
 		/* Permissions Configs */
 		/*
@@ -90,8 +90,10 @@ public class ConfigurationManager {
 	}
 
 	// 設定 getter ここから
-	/* Basic Configs */
-
+	/* General Configs */
+	public int getRadius(){
+		return this.radius;
+	}
 
 	/* Permissions Configs */
 	/*

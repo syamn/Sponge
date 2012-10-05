@@ -41,14 +41,15 @@ public class BlockListener implements Listener {
 
 		Block sponge = event.getBlock();
 		World world = sponge.getWorld();
+		int radius = plugin.getConfigs().getRadius();
 
 		int x = sponge.getX();
 		int y = sponge.getY();
 		int z = sponge.getZ();
 
-		for (int cx = -2; cx <= 2; cx++){ // X軸走査
-			for (int cy = -2; cy <= 2; cy++){ // Y軸走査
-				for (int cz = -2; cz <= 2; cz++){ // Z軸走査
+		for (int cx = -radius; cx <= radius; cx++){ // X軸走査
+			for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
+				for (int cz = -radius; cz <= radius; cz++){ // Z軸走査
 					// ブロックIDチェック
 					int id = world.getBlockTypeIdAt(x + cx, y + cy, z + cz);
 					// 水か溶岩なら空気に変える
