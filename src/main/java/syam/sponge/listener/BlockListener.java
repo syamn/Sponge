@@ -35,8 +35,8 @@ public class BlockListener implements Listener {
 	// ブロックを設置した
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onBlockPlace(final BlockPlaceEvent event){
-		// スポンジでなければ返す
-		if (!event.getBlock().getType().equals(Material.SPONGE)){
+		// スポンジでなければ返す 19:SPONGE
+		if (event.getBlock().getTypeId() != 19){
 			return;
 		}
 
@@ -48,11 +48,13 @@ public class BlockListener implements Listener {
 		int y = sponge.getY();
 		int z = sponge.getZ();
 
+		int id = 0;
+
 		for (int cx = -radius; cx <= radius; cx++){ // X軸走査
 			for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
 				for (int cz = -radius; cz <= radius; cz++){ // Z軸走査
 					// ブロックIDチェック
-					int id = world.getBlockTypeIdAt(x + cx, y + cy, z + cz);
+					id = world.getBlockTypeIdAt(x + cx, y + cy, z + cz);
 					// 水か溶岩なら空気に変える
 					if (id == 8 || id == 9 || id == 10 || id == 11){
 						world.getBlockAt(x + cx, y + cy, z + cz).setTypeId(0);
