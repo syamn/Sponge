@@ -4,7 +4,6 @@ version: version-number-unknown
 main: syam.sponge.Sponge
 description: Sponge Plugin
 website: http://sakura-server.net/
-#softdepend: [Vault, PermissionsEx]
 ##  Original Author     ##
 author: syam
 commands:
@@ -13,6 +12,6 @@ commands:
       aliases: [sponges]
       description: To see the sponge help.
 permissions:
-    sponge.admin:
+    sponge.reload:
         default: op
-        description: Allow access admin commands
+        description: Allow access reload command.

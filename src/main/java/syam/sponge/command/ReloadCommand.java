@@ -33,6 +33,6 @@ public class ReloadCommand extends BaseCommand {
 
 	@Override
 	public boolean permission() {
-		return sender.hasPermission("sponge.admin");
+		return sender.hasPermission("sponge.reload");
 	}
 }
