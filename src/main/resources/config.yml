@@ -6,6 +6,8 @@
 #   General Config   #
 #====================#
 Radius: 2
+EnableWater: true
+EnableLava: true
 
 #==================#
 #   DO NOT TOUCH   #

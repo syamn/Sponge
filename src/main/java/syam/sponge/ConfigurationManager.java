@@ -41,6 +41,8 @@ public class ConfigurationManager {
 	// 設定項目
 	/* General Configs */
 	private int radius = 2;
+	private boolean enableWater = true;
+	private boolean enableLava = true;
 
 	/* Permissions Configs */
 	//private List<String> permissions = defaultPermissions;
@@ -77,7 +79,9 @@ public class ConfigurationManager {
 		checkver(version);
 
 		/* General Configs */
-		plugin.getConfig().getInt("Radius", 2);
+		radius = plugin.getConfig().getInt("Radius", 2);
+		enableWater = plugin.getConfig().getBoolean("EnableWater", true);
+		enableLava = plugin.getConfig().getBoolean("EnableLava", true);
 
 		/* Permissions Configs */
 		/*
@@ -93,6 +97,12 @@ public class ConfigurationManager {
 	/* General Configs */
 	public int getRadius(){
 		return this.radius;
+	}
+	public boolean isEnableWater(){
+		return this.enableWater;
+	}
+	public boolean isEnableLava(){
+		return this.enableLava;
 	}
 
 	/* Permissions Configs */

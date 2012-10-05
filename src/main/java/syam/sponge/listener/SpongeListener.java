@@ -43,7 +43,10 @@ public class SpongeListener implements Listener {
 
 		Block sponge = event.getBlock();
 		World world = sponge.getWorld();
+
 		int radius = plugin.getConfigs().getRadius();
+		boolean water = plugin.getConfigs().isEnableWater();
+		boolean lava = plugin.getConfigs().isEnableLava();
 
 		int x = sponge.getX();
 		int y = sponge.getY();
@@ -57,7 +60,7 @@ public class SpongeListener implements Listener {
 					// ブロックIDチェック
 					id = world.getBlockTypeIdAt(x + cx, y + cy, z + cz);
 					// 水か溶岩なら空気に変える
-					if (id == 8 || id == 9 || id == 10 || id == 11){
+					if ((water && (id == 8 || id == 9)) || (lava && (id == 10 || id == 11))){
 						world.getBlockAt(x + cx, y + cy, z + cz).setTypeId(0);
 					}
 				}
@@ -68,51 +71,52 @@ public class SpongeListener implements Listener {
 	// 流体ブロックの流れが変わった
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onBlockFromTo(final BlockFromToEvent event){
-		// 流体ブロック以外なら返す
+		// 流体ブロック以外は何もしない
 		int id = event.getBlock().getTypeId();
-		if (!(id == 8 || id == 9 || id == 10 || id == 11)){
-			return;
-		}
+		if ((plugin.getConfigs().isEnableWater() && (id == 8 || id == 9)) || (plugin.getConfigs().isEnableLava() && (id == 10 || id == 11))){
+			Block toBlock = event.getToBlock();
+			World world = toBlock.getWorld();
+			int radius = plugin.getConfigs().getRadius();
 
-		Block toBlock = event.getToBlock();
-		World world = toBlock.getWorld();
-		int radius = plugin.getConfigs().getRadius();
+			int x = toBlock.getX();
+			int y = toBlock.getY();
+			int z = toBlock.getZ();
 
-		int x = toBlock.getX();
-		int y = toBlock.getY();
-		int z = toBlock.getZ();
-
-		for (int cx = -radius; cx <= radius; cx++){ // X軸走査
-			for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
-				for (int cz = -radius; cz <= radius; cz++){ // Z軸走査
-					// ブロックIDチェック: 19(SPONGE)
-					if(world.getBlockTypeIdAt(x + cx, y + cy, z + cz) == 19){
-						event.setCancelled(true);
-						return;
+			for (int cx = -radius; cx <= radius; cx++){ // X軸走査
+				for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
+					for (int cz = -radius; cz <= radius; cz++){ // Z軸走査
+						// ブロックIDチェック: 19(SPONGE)
+						if(world.getBlockTypeIdAt(x + cx, y + cy, z + cz) == 19){
+							event.setCancelled(true);
+							return;
+						}
 					}
 				}
 			}
 		}
 	}
 
-	// 流体ブロックの流れが変わった
+	// バケツを空にした
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerBucketEmpty(final PlayerBucketEmptyEvent event){
-		Block block = event.getBlockClicked().getRelative(event.getBlockFace());
-		World world = block.getWorld();
-		int radius = plugin.getConfigs().getRadius();
+		int id = event.getBucket().getId();
+		if ((plugin.getConfigs().isEnableWater() && id == 326) || (plugin.getConfigs().isEnableLava() && id == 327)){
+			Block block = event.getBlockClicked().getRelative(event.getBlockFace());
+			World world = block.getWorld();
+			int radius = plugin.getConfigs().getRadius();
 
-		int x = block.getX();
-		int y = block.getY();
-		int z = block.getZ();
+			int x = block.getX();
+			int y = block.getY();
+			int z = block.getZ();
 
-		for (int cx = -radius; cx <= radius; cx++){ // X軸走査
-			for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
-				for (int cz = -radius; cz <= radius; cz++){ // Z軸走査
-					// ブロックIDチェック: 19(SPONGE)
-					if(world.getBlockTypeIdAt(x + cx, y + cy, z + cz) == 19){
-						event.setCancelled(true);
-						return;
+			for (int cx = -radius; cx <= radius; cx++){ // X軸走査
+				for (int cy = -radius; cy <= radius; cy++){ // Y軸走査
+					for (int cz = -radius; cz <= radius; cz++){ // Z軸走査
+						// ブロックIDチェック: 19(SPONGE)
+						if(world.getBlockTypeIdAt(x + cx, y + cy, z + cz) == 19){
+							event.setCancelled(true);
+							return;
+						}
 					}
 				}
 			}
